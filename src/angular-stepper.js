@@ -8,11 +8,13 @@ angular.module('revolunet.stepper', [])
             min: '=',
             max: '=',
             ngModel: '=',
-            ngDisabled: '='
+            onChange: '&',
+            item: '=',
+            ngReadonly: "="
         },
-        template: '<button type="button" ng-disabled="isOverMin() || ngDisabled" ng-click="decrement()">-</button>' +
-                  '<input type="text" ng-model="ngModel" ng-disabled="ngDisabled">' +
-                  '<button type="button" ng-disabled="isOverMax() || ngDisabled" ng-click="increment()">+</button>',
+        template: '<button type="button" ng-disabled="isOverMin()" ng-click="decrement()">-</button>' +
+                  '<input type="text" ng-model="ngModel" ng-readonly="true">' +
+                  '<button type="button" ng-disabled="isOverMax()" ng-click="increment()">+</button>',
         link: function(scope, iElement, iAttrs, ngModelController) {
 
             scope.label = '';
@@ -53,13 +55,23 @@ angular.module('revolunet.stepper', [])
                 ngModelController.$setViewValue(ngModelController.$viewValue + offset);
                 // update the local view
                 ngModelController.$render();
+                console.log("Stepper Value Change");
+                console.log(scope.onChange);
+                // Callback
+                scope.onChange({item: scope.item});
             }
 
             scope.isOverMin = function(strict) {
+                if(scope.ngReadonly){
+                    return true;
+                }
                 var offset = strict?0:1;
                 return (angular.isDefined(scope.min) && (ngModelController.$viewValue - offset) < parseInt(scope.min, 10));
             };
             scope.isOverMax = function(strict) {
+                if(scope.ngReadonly){
+                    return true;
+                }
                 var offset = strict?0:1;
                 return (angular.isDefined(scope.max) && (ngModelController.$viewValue + offset) > parseInt(scope.max, 10));
             };
@@ -80,6 +92,8 @@ angular.module('revolunet.stepper', [])
             scope.$watch('min+max', function() {
                 checkValidity();
             });
+            
+            scope.onChange({item: scope.item});
         }
     };
 });

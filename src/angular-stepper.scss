@@ -1,10 +1,11 @@
-$stepper-height: 40px;
-$stepper-button-width: 40px;
+$stepper-height: 30px;
+$stepper-button-width: 30px;
 $stepper-border-width: 1px;
-$stepper-button-bg: #4D4DFF;
+$stepper-button-bg: rgb(30, 69, 128);
 $stepper-value-bg: #eee;
 $stepper-value-error: #FF3B34;
-$stepper-value-disabled-color: #aaa;
+$stepper-width: 30px;
+
 div[rn-stepper] {
     box-sizing:border-box;
     border:1px solid #bbb;
@@ -16,14 +17,6 @@ div[rn-stepper] {
             border:3px solid $stepper-value-error;
         }
     }
-
-    &[disabled] {
-        input {
-            color: $stepper-value-disabled-color;
-            border: 0;
-        }
-    }
-
     button {
         box-sizing: border-box;
         appearance:none;
@@ -34,7 +27,7 @@ div[rn-stepper] {
         background: $stepper-button-bg;
         color: white;
         font-weight:bold;
-        font-size:20px;
+        font-size: 22px;
         outline: none;
         &[disabled] {
             opacity: 0.3;
@@ -53,5 +46,6 @@ div[rn-stepper] {
         height:$stepper-height;
         line-height:$stepper-height;
         box-sizing:border-box;
+        width: $stepper-width
     }
 }
